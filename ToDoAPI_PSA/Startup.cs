@@ -43,7 +43,6 @@ namespace ToDoAPI_PSA
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
                 app.UseSwagger(c =>
                 {
                     c.SerializeAsV2 = true;
