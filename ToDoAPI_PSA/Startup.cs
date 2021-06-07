@@ -34,7 +34,10 @@ namespace ToDoAPI_PSA
                 services.AddDbContext<TodoContext>(opt =>
                                                    opt.UseInMemoryDatabase("TodoList"));
                 services.AddControllers();
-                services.AddSwaggerGen();
+                services.AddSwaggerGen(c=>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoAPI", Version = "v1" });
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,15 +46,6 @@ namespace ToDoAPI_PSA
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger(c =>
-                {
-                    c.SerializeAsV2 = true;
-                });
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                    c.RoutePrefix = string.Empty;
-                });
             }
 
             app.UseHttpsRedirection();
@@ -64,6 +58,15 @@ namespace ToDoAPI_PSA
             {
                 endpoints.MapControllers();
             });
+            app.UseSwagger(c =>
+                {
+                 c.SerializeAsV2 = true;
+            });
+            app.UseSwaggerUI(c =>
+             {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+             });
         }
     }
 }
